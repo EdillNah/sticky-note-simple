@@ -75,11 +75,14 @@
   padding: 16px 14px;
   backdrop-filter: blur(10px) saturate(180%);
   background-color: rgba(255, 255, 255, 0.2);
-  transition: all 0.2s ease;
-  animation: fadeInUp 0.4s ease forwards;
+  /* Jangan transisikan left/top: itu yang bikin drag terasa lambat/lag */
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: fadeInUp 0.4s ease;
   border-radius: 12px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
               0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  cursor: grab;
+  touch-action: none; /* supaya drag tetap jalan di layar sentuh */
 }
 
 .note:nth-child(5n + 1) {
@@ -113,6 +116,16 @@
               0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
+.note.dragging {
+  cursor: grabbing;
+  box-shadow: 0 18px 28px -8px rgba(0, 0, 0, 0.25),
+              0 8px 12px -6px rgba(0, 0, 0, 0.12);
+}
+
+.note.dragging textarea {
+  cursor: grabbing;
+}
+
 .note textarea {
   width: 100%;
   height: 120px;
@@ -123,7 +136,9 @@
   font-size: 16px;
   font-family: 'inherit';
   color: #404040;
-  padding: 10px
+  padding: 10px;
+  cursor: text;
+  user-select: text;
 }
 
 .move-icon {
